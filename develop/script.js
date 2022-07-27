@@ -9,6 +9,19 @@ var wind_speed;
 var uvi;
 var cityIn="Peterborough";
 var stateIn="Ontario";
+var userCity=document.getElementById("cityIn");
+var userState=document.getElementById("stateIn");
+var places=[];
+
+
+$("#search").click(function(){
+    cityIn = userCity.value;
+    stateIn = userState.value;
+    var tempArray = [cityIn, stateIn];
+    places.push(tempArray);
+    
+    localStorage.setItem("cities", JSON.stringify(places));
+});
 
 
 function getCords(){
