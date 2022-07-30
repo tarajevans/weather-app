@@ -12,17 +12,18 @@
     <h1 id="header">Weather Dashboard</h1>
 </header>
 <body>
-    <div>
-        <form>
-            <label for="cityIn">City:</label><br>
-            <input type="text" id="cityIn" name="cityIn"><br>
-            <label for="stateIn">State or Province:</label><br>
-            <input type="text" id="stateIn" name="stateIn">
-        </form>
-        <button type="search" id="search">Search</button>
-    </div>
-    <div id="displayResults"></div>
-
+    <div class="col-12 col-lg-3 text-dark sticky-top d-flex flex-column p-4 p-lg-3">
+            <h2 class="text-center">
+              Search for a city
+            </h2>
+            <form>
+                <label for="cityIn">City:</label><br>
+                <input type="text" id="cityIn" name="cityIn"><br>
+                <label for="stateIn">State or Province:</label><br>
+                <input type="text" id="stateIn" name="stateIn">
+            </form></br>
+            <button type="search" id="search">Search</button>
+            <div id="displayResults"></div>
     </div>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="./develop/script.js"></script>

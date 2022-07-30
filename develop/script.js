@@ -65,15 +65,26 @@ function getWeather(){
                 currentIcon = data.current.weather[0].icon;
                 console.log(temp + " " + humidity + " " + wind_speed + " " + uvi + " " + city);
                 console.log(data);
-                function displayWeather(){
-                    var resultString= city + " " + date + " " +  currentIcon + " "  + temp + " " + humidity + " " + wind_speed + " " + uvi;
-                    displayResults.textContent=resultString;
-                  }
+
                 displayWeather();
+                convertTime(data.current.dt);
                 displayResults.innerHTML="<img src=icons/"+currentIcon+".png>"
             
         });
     });
+}
+function displayWeather(){
+    var resultString= city + " " + date + " " +  currentIcon + " "  + temp + " " + humidity + " " + wind_speed + " " + uvi;
+    displayResults.textContent=resultString;
+  }
+function convertTime(timeStamp){
+    var date = new Date(timeStamp*1000);
+    var year = date.getFullYear();
+    var month = date.getMonth();
+    var day = date.getDate();
+    console.log(month.toString() + "/" + day.toString() + "/" + year.toString());
+    return month.toString() + "/" + day.toString() + "/" + year.toString();
+
 }
 
 getCords();
