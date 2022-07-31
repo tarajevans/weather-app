@@ -18,10 +18,11 @@ let historyUl = document.getElementById("history");
 
 var places = [["City", "State"]];
 
-$(".container").on("click", "li", function(event) {
-    $.each(places, function(index, timeBlock){
-        
-    })
+$(".container").on("click", "button", function(event) {
+    cityIn=$(this).text();
+    stateIn=$(this).data("state");
+    getCords();
+    console.log($(this).data("state"));
 })
 
 function createHistory(){
@@ -33,7 +34,12 @@ function createHistory(){
         
         var listItem = $("<li>");
         listItem.addClass("historyLi");
-        listItem.text(places[i][0]);
+        //listItem.text(places[i][0]);
+        var cityButton=$("<button>");
+        cityButton.text(places[i][0]);
+        cityButton.addClass("cityButton");
+        $(cityButton.data("state", places[i][1]));
+        listItem.append(cityButton);
         $(historyUl).append(listItem);
     }
 }
