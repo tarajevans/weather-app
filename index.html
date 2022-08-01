@@ -12,75 +12,48 @@
     <h1 id="header">Weather Dashboard</h1>
 </header>
 <body>
-    <div class="col-12 col-lg-3 text-dark sticky-top d-flex flex-column p-4 p-lg-3">
-            <h2 class="text-center">
-              Search for a city
-            </h2>
-            <form>
-                <label for="cityIn">City:</label><br>
-                <input type="text" id="cityIn" name="cityIn"><br>
-                <label for="stateIn">State or Province:</label><br>
-                <input type="text" id="stateIn" name="stateIn">
-            </form></br>
-            <button type="search" id="search">Search</button>
-            <div id="displayResults"></div>
+    <div clas="row">
+        <div class="col ">
+            <div class="row">
+                <div class="col col-lg-2 text-dark sticky-top d-flex flex-column p-4 p-lg-3">
+                    <h2 class="text-center">
+                        Search for a city
+                    </h2>
+                    <form>
+                        <label for="cityIn">City:</label><br>
+                        <input type="text" id="cityIn" name="cityIn"><br>
+                        <label for="stateIn">State or Province:</label><br>
+                        <input type="text" id="stateIn" name="stateIn">
+                    </form></br>
+                    <button type="search" id="search">Search</button>
+                    <ul id="history" class="container"></ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col col-lg-12">    
+            <div id="displayResults">
 
-        <ul id="history" class="container"></ul>
+            </div>
+            <div>
+                <text id="temp"></text>
+            </div>
+            <div>
+                <text id="humidity"></text>
+            </div>
+            <div>
+                <text id="wind"></text>
+            </div>
+            
+        </div>   
+    
+            <main class="column">
+                <div class="row" id="fiveDay">
+                </div>
+            </main>
+            
+                 
     </div>
-    <main class="col-12 col-lg-9 d-flex flex-column">
-        <div class="m-5 row justify-content-around">
-
-          <div class="col-12 col-md-6 col-xl-3 mb-3">
-            <div class="card">
-                <h4 class="card-header bg-dark text-light">
-                Date</h4>
-            <ul id="list-toDo" class="list-group list-group-flush">
-  
-          </ul>
-          </div>
-          </div>
-
-           <div class="col-12 col-md-6 col-xl-3 mb-3">
-            <div class="card">
-                <h4 class="card-header bg-dark text-light">
-                Date</h4>
-            <ul id="list-inProgress" class="list-group list-group-flush">
-  
-            </ul>
-          </div>
-          </div>
-          <div class="col-12 col-md-6 col-xl-3 mb-3">
-            <div class="card">
-                <h4 class="card-header bg-dark text-light">
-                Date</h4>
-            <ul id="list-inProgress" class="list-group list-group-flush">
-  
-            </ul>
-          </div>
-          </div>
-
-          <div class="col-12 col-md-6 col-xl-3 mb-3">
-            <div class="card">
-                <h4 class="card-header bg-dark text-light">
-                Date</h4>
-            <ul id="list-inReview" class="list-group list-group-flush">
-  
-            </ul>
-          </div>
-          </div>
-
-          <div class="col-12 col-md-6 col-xl-3 mb-3">
-            <div class="card">
-                <h4 class="card-header bg-dark text-light">
-                Date</h4>
-            <ul id="list-done" class="list-group list-group-flush">
-  
-            </ul>
-          </div>
-          </div>
-
-</div>
-    </main>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="./develop/script.js"></script>
 </body>

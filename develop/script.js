@@ -135,6 +135,25 @@ function capitalizeState(string){
 function capitalizeWord(string){
     return string[0].toUpperCase() + string.slice(1).toLowerCase();
 }
+
+function showFiveDay(data){
+    //remove existing five day cards
+    removeChildren(fiveDay);
+    //make new five day cards
+    for (var i = 1; i < 6; i++){
+    $(fiveDay).append(makeFiveDayCard(data, i));
+    }
+}
+function removeChildren(parent){
+    //get all the children of the parent and store them as array
+    var currentChildren = parent.children;
+        //loop through the currentChildren array  
+        $(currentChildren).each(function(){
+            //remove each child of the parent
+            this.remove();
+        });
+    }
+    
 function makeFiveDayCard(data, index){
     //create a colum
     let colum =  $("<div>")
