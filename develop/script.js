@@ -135,6 +135,51 @@ function capitalizeState(string){
 function capitalizeWord(string){
     return string[0].toUpperCase() + string.slice(1).toLowerCase();
 }
+function makeFiveDayCard(data, index){
+    //create a colum
+    let colum =  $("<div>")
+    //add class values
+    $(colum).addClass("fiveDayCol col-4 col-md-3 col-lg-2 col-xl-2 mb-2");
+    
+    //create a card
+    let card = $("<div>");
+    //add the class "card" to the card
+    $(card).addClass("card fiveDayCard");
+    
+    //create card header
+    let cardHeader = $("<h4>");
+    // add class "card-header bg-dark text-light" to cardHeader
+    $(cardHeader).addClass("card-header");
+    //assign date to cardHeader
+    $(cardHeader).text (convertTime(data.daily[index].dt));
+    
+    //create a div for the icon
+    let iconDiv = $("<img>");
+    //display icon in iconDiv
+    $(iconDiv).attr("src", "icons/"+data.daily[index].weather[0].icon+".png");
+
+    //create text elements for temp wind and humidity
+    let tempText = $("<text>");
+    let windtext = $("<text>");
+    let humidText = $("<text>");
+
+    //display corrisponding values
+    $(tempText).text("Temp: " + data.daily[index].temp.max.toString() + " C");
+    $(windtext).text("Wind: " + data.daily[index].wind_speed.toString() + " KPH");
+    $(humidText).text("Humidity: " + data.daily[index].humidity.toString()+ "%");
+
+    //add header to card
+    $(card).append(cardHeader);
+    //add iconDiv to card
+    $(card).append(iconDiv);
+    //add temp wind and humidity to card
+    $(card).append(tempText);
+    $(card).append(windtext);
+    $(card).append(humidText);
+    //add card to colum
+    $(colum).append(card);
+    return colum;
+}
 
 console.log(localStorage.getItem("cities"));
 getCords();
