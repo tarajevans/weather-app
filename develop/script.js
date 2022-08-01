@@ -1,5 +1,3 @@
-var currentLat;
-var currentLng;
 var uvi;
 var windSpeed;
 var humidity;
@@ -7,12 +5,12 @@ var temp;
 var currentIcon;
 var city;
 var currDate;
-var cityIn = "Boston";
-var stateIn = "MA";
+var cityIn;
+var stateIn;
 
-var userCity = document.getElementById("cityIn");
-var userState = document.getElementById("stateIn");
-var displayResults = document.getElementById("displayResults");
+let userCity = document.getElementById("cityIn");
+let userState = document.getElementById("stateIn");
+let displayResults = document.getElementById("displayResults");
 let locationIcon = document.querySelector('.weather-icon');
 let historyUl = document.getElementById("history");
 let fiveDay = document.getElementById("fiveDay");
@@ -20,49 +18,57 @@ let currWindText = document.getElementById("wind");
 let currtempText = document.getElementById("temp");
 let currHumidityText = document.getElementById("humidity");
 
-var places = [["City", "State"]];
+var places = [];
 
+//click handler for cityButtons in the history list
 $(".container").on("click", "button", function(event) {
-    cityIn=$(this).text();
-    stateIn=$(this).data("state");
-    getCords();
-    console.log($(this).data("state"));
+        cityIn = $(this).text();
+        stateIn = $(this).data("state");
+        getCords();
 })
 
 function createHistory(){
-    removeChildren(historyUl);
-    //check that the places array has values stored
-    if (places.length != 0){
-        //reverse the order of the places array to show last entered first
-        var revPlaces = places.reverse();
-        //loop through the revPlaces array and apply the following to each
-        for (var i = 0; i < revPlaces.length; i++){
-            //create a list item 
-            var listItem = $("<li>");
-            //add the class "historyLi" to the listItem
-            listItem.addClass("historyLi");
-            //create a button named cityButton
-            var cityButton = $("<button>");
-            //get the of each city from revPlaces and assign it to the text atttribute of the cityButton
-            cityButton.text(revPlaces[i][0]);
-            //add the class "cityButton" to the cityButton
-            cityButton.addClass("cityButton");
-            //add a data-state value to the button tag
-            $(cityButton).data("state", revPlaces[i][1]);
-            //add the cityButton to the listItem
-            listItem.append(cityButton);
-            //add the listItem to the historyUl
-            $(historyUl).append(listItem);
+        removeChildren(historyUl);
+        //check that the places array has values stored
+        if (places.length != 0){
+            //reverse the order of the places array to show last entered first
+            var revPlaces = places.reverse();
+            //loop through the revPlaces array and apply the following to each
+            for (var i = 0; i < revPlaces.length; i++){
+                //create a list item 
+                var listItem = $("<li>");
+                //add the class "historyLi" to the listItem
+                listItem.addClass("historyLi");
+                //create a button named cityButton
+                var cityButton = $("<button>");
+                //get the of each city from revPlaces and assign it to the text atttribute of the cityButton
+                cityButton.text(revPlaces[i][0]);
+                //add the class "cityButton" to the cityButton
+                cityButton.addClass("cityButton");
+                //add a data-state value to the button tag
+                $(cityButton).data("state", revPlaces[i][1]);
+                //add the cityButton to the listItem
+                listItem.append(cityButton);
+                //add the listItem to the historyUl
+                $(historyUl).append(listItem);
+            }
         }
-    }
 }
-
+//click handler for the search button
 $("#search").click(function(){
-    cityIn = capitalizeWord(userCity.value) ;
-    stateIn = capitalizeState(userState.value);
-    saveCity(cityIn, stateIn);
-    getCords();
+    //ckeck that user entered data
+    if (userCity.value.length == 0 || userState.value.length == 0){
+        //if none entered print to colsole.log
+        console.log("Text box not filled in");
+    }else{
+        //assign the values found in the form fields to the appropriate variable, capitalizing as needed
+        cityIn = capitalizeWord(userCity.value) ;
+        stateIn = capitalizeState(userState.value);
+        saveCity(cityIn, stateIn);
+        getCords();
+    }
 });
+
 
 function saveCity(cityIn, stateIn){
     //check that places array has objects stored
@@ -146,8 +152,8 @@ function getCords(){
     });
 }
 
-function getWeather(currentLat, currentlng){
-    fetch("https://api.openweathermap.org/data/3.0/onecall?lat=" + currentLat + "&lon=" + currentlng + "&units=metric&appid=ec30fe20fd671a00bbcc63e83e68cb73").then(function(response) {
+function getWeather(currentLat, currentLng){
+    fetch("https://api.openweathermap.org/data/3.0/onecall?lat=" + currentLat + "&lon=" + currentLng + "&units=metric&appid=ec30fe20fd671a00bbcc63e83e68cb73").then(function(response) {
             response.json().then(function(data) {
                 //check if we recieved a good result
                 if(data.current){
@@ -175,7 +181,7 @@ function convertTime(timeStamp){
     var year = date.getFullYear();
     var month = date.getMonth();
     var day = date.getDate();
-    return month.toString() + "/" + day.toString() + "/" + year.toString();
+    return (month+1).toString() + "/" + day.toString() + "/" + year.toString();
 }
 // Capitalizes both letters in the state abbreviation
 function capitalizeState(string){
@@ -195,21 +201,12 @@ function showFiveDay(data){
     $(fiveDay).append(makeFiveDayCard(data, i));
     }
 }
-function removeChildren(parent){
-    //get all the children of the parent and store them as array
-    var currentChildren = parent.children;
-        //loop through the currentChildren array  
-        $(currentChildren).each(function(){
-            //remove each child of the parent
-            this.remove();
-        });
-    }
 
 function makeFiveDayCard(data, index){
     //create a colum
     let colum =  $("<div>")
     //add class values
-    $(colum).addClass("fiveDayCol col-4 col-md-3 col-lg-2 col-xl-2 mb-2");
+    $(colum).addClass("fiveDayCol col-4 col-md-3 col-lg-2 col-xl-2 mb-2");//switch this to CSS, then delete this line
     
     //create a card
     let card = $("<div>");
@@ -218,7 +215,7 @@ function makeFiveDayCard(data, index){
     
     //create card header
     let cardHeader = $("<h4>");
-    // add class "card-header bg-dark text-light" to cardHeader
+    // add class "card-header" to cardHeader
     $(cardHeader).addClass("card-header");
     //assign date to cardHeader
     $(cardHeader).text (convertTime(data.daily[index].dt));
@@ -232,7 +229,6 @@ function makeFiveDayCard(data, index){
     let tempText = $("<text>");
     let windtext = $("<text>");
     let humidText = $("<text>");
-
     //display corrisponding values
     $(tempText).text("Temp: " + data.daily[index].temp.max.toString() + " C");
     $(windtext).text("Wind: " + data.daily[index].wind_speed.toString() + " KPH");
@@ -246,11 +242,20 @@ function makeFiveDayCard(data, index){
     $(card).append(tempText);
     $(card).append(windtext);
     $(card).append(humidText);
-    //add card to colum
+    //add card to column
     $(colum).append(card);
     return colum;
 }
 
+function removeChildren(parent){
+    //get all the children of the parent and store them as array
+    var currentChildren = parent.children;
+        //loop through the currentChildren array  
+        $(currentChildren).each(function(){
+            //remove each child of the parent
+            this.remove();
+        });
+}
 //loads the last city viewed 
 function loadLast(){
     let raw = localStorage.getItem("last");
