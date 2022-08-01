@@ -15,6 +15,10 @@ var userState = document.getElementById("stateIn");
 var displayResults = document.getElementById("displayResults");
 let locationIcon = document.querySelector('.weather-icon');
 let historyUl = document.getElementById("history");
+let fiveDay = document.getElementById("fiveDay");
+let currWindText = document.getElementById("wind");
+let currtempText = document.getElementById("temp");
+let currHumidityText = document.getElementById("humidity");
 
 var places = [["City", "State"]];
 
@@ -68,21 +72,26 @@ function saveCity(cityIn, stateIn){
 
 function displayWeather(timeStamp){
     currDate = convertTime(timeStamp);
-    var resultString = city + " " + currDate + " " +  "<img src=icons/"+currentIcon+".png>" + " "  + temp + " " + humidity + " " + windSpeed + " " + uvi;
-
-    displayResults.innerHTML = resultString;
+    //assign values to text fields
+    $(currHumidityText).text("Humidity: " + humidity + "%");
+    $(currWindText).text("Wind Speed: " + windSpeed + " KPH");
+    $(currtempText).text("Tempeture: " + temp + " C");
+    var resultString = city + " (" + currDate + ") " +  "<img src=icons/"+currentIcon+".png>";
+     displayResults.innerHTML = resultString;
 }
 
-
-
 function getHistory(){
+    //call from local storage
     var result = localStorage.getItem("cities");
-    
+    //check that we received a result
     if(result != null){
+        //convert result to a JSON object
         var parseResult = JSON.parse(result);
         for(var i = 0; i < parseResult.length; i++){
+            //add each entry to places array
             places.push(parseResult[i]);
         }
+    //if no result returned from localstorage (i.e. storage is empty)
     }else{
         console.log("cities not found");
     }
