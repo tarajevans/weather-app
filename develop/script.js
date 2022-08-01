@@ -30,21 +30,30 @@ $(".container").on("click", "button", function(event) {
 })
 
 function createHistory(){
-    var currentChildren = historyUl.children
-        $(currentChildren).each(function(){
-            this.remove();
-        });
-    for (var i = 0; i < places.length; i++){
-        
-        var listItem = $("<li>");
-        listItem.addClass("historyLi");
-        //listItem.text(places[i][0]);
-        var cityButton=$("<button>");
-        cityButton.text(places[i][0]);
-        cityButton.addClass("cityButton");
-        $(cityButton.data("state", places[i][1]));
-        listItem.append(cityButton);
-        $(historyUl).append(listItem);
+    removeChildren(historyUl);
+    //check that the places array has values stored
+    if (places.length != 0){
+        //reverse the order of the places array to show last entered first
+        var revPlaces = places.reverse();
+        //loop through the revPlaces array and apply the following to each
+        for (var i = 0; i < revPlaces.length; i++){
+            //create a list item 
+            var listItem = $("<li>");
+            //add the class "historyLi" to the listItem
+            listItem.addClass("historyLi");
+            //create a button named cityButton
+            var cityButton = $("<button>");
+            //get the of each city from revPlaces and assign it to the text atttribute of the cityButton
+            cityButton.text(revPlaces[i][0]);
+            //add the class "cityButton" to the cityButton
+            cityButton.addClass("cityButton");
+            //add a data-state value to the button tag
+            $(cityButton).data("state", revPlaces[i][1]);
+            //add the cityButton to the listItem
+            listItem.append(cityButton);
+            //add the listItem to the historyUl
+            $(historyUl).append(listItem);
+        }
     }
 }
 
@@ -56,17 +65,35 @@ $("#search").click(function(){
 });
 
 function saveCity(cityIn, stateIn){
-    for (var i = 0; i < places.length; i++){
-        if (places[i][0] === cityIn && places[i][1] === stateIn){
-            places.splice(i, i+1);
-            var tempArray = [cityIn, stateIn];
-            places.push(tempArray);
-            localStorage.setItem("cities", JSON.stringify(places));
-        } else {
-            var tempArray = [cityIn, stateIn];
-            places.push(tempArray);
-            localStorage.setItem("cities", JSON.stringify(places));
+    //check that places array has objects stored
+    //if it does
+    if (places.length != 0){
+        for (var i = 0; i < places.length; i++){
+            //check if city / state exsist in the places array
+            if (places[i][0] === cityIn && places[i][1] === stateIn){
+                //remove current city entry from array
+                places.splice(i, i+1);
+                //create a new object to be stored in the places array
+                var tempArray = [cityIn, stateIn];
+                //add to places array
+                places.push(tempArray);
+                //save to local storage
+                localStorage.setItem("cities", JSON.stringify(places));
+            //if city state does not exist
+            } else {
+                //same as above
+                var tempArray = [cityIn, stateIn];
+                places.push(tempArray);
+                localStorage.setItem("cities", JSON.stringify(places));
+            }
+        
         }
+    //if places array is empty
+    }else{
+        //same as above
+        var tempArray = [cityIn, stateIn];
+            places.push(tempArray);
+            localStorage.setItem("cities", JSON.stringify(places));
     }
 }
 
@@ -224,6 +251,25 @@ function makeFiveDayCard(data, index){
     return colum;
 }
 
-console.log(localStorage.getItem("cities"));
-getCords();
+//loads the last city viewed 
+function loadLast(){
+    let raw = localStorage.getItem("last");
+    //check that an object was returned
+    if(raw != null){
+        //parse to a JSON object
+        let result = JSON.parse(raw);
+        //assign values
+        cityIn = result[0];
+        stateIn = result[1];
+        getCords();
+    //if there was no object returned
+    }else{
+        cityIn = "Chicago";
+        stateIn = "IL";
+        getCords();
+    }  
+}
+
 getHistory();
+createHistory();
+loadLast();
