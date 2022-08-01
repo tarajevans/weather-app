@@ -1,5 +1,5 @@
 var currentLat;
-var currentlng;
+var currentLng;
 var uvi;
 var windSpeed;
 var humidity;
@@ -91,29 +91,44 @@ function getHistory(){
 function getCords(){
     fetch("https://maps.googleapis.com/maps/api/geocode/json?address=" + cityIn + ",+" + stateIn +"&key=AIzaSyAweIP9TjVJjtUjpbZuiu69BBoh9sMPMUc").then(function(response) {
         response.json().then(function(data) {
+            //check response status
+            //if status is ok 
             if(data.status === 'OK'){
-                currentLat = data.results[0].geometry.location.lat.toFixed(6);
-                currentlng = data.results[0].geometry.location.lng.toFixed(6);
+                //currentLat = data.results[0].geometry.location.lat.toFixed(6);
+                //currentlng = data.results[0].geometry.location.lng.toFixed(6);
                 city = data.results[0].address_components[0].long_name;
+            //if satus is not ok
             }else{
                 console.log("*ERROR* " + data.status);
             }
-            getWeather();
+            var tempPlace = [];
+            var thisPlace = [cityIn, stateIn];
+            tempPlace.push(thisPlace);
+            localStorage.setItem("last",JSON.stringify(tempPlace));
+            getWeather(data.results[0].geometry.location.lat.toFixed(6),data.results[0].geometry.location.lng.toFixed(6));
         });
     });
 }
 
-function getWeather(){
+function getWeather(currentLat, currentlng){
     fetch("https://api.openweathermap.org/data/3.0/onecall?lat=" + currentLat + "&lon=" + currentlng + "&units=metric&appid=ec30fe20fd671a00bbcc63e83e68cb73").then(function(response) {
             response.json().then(function(data) {
-                uvi = data.current.uvi;
-                temp = data.current.temp;
-                windSpeed = data.current.wind_speed;
-                humidity = data.current.humidity;
-                currentIcon = data.current.weather[0].icon;
-                console.log(data);
-                displayWeather(data.current.dt);
-                createHistory(data);
+                //check if we recieved a good result
+                if(data.current){
+                    //get values from the data object and assign to variables
+                    uvi = data.current.uvi;
+                    temp = data.current.temp;
+                    windSpeed = data.current.wind_speed;
+                    humidity = data.current.humidity;
+                    currentIcon = data.current.weather[0].icon;
+
+                    displayWeather(data.current.dt);
+                    createHistory(data);
+                    showFiveDay(data);
+                //if we did not get the expexted result
+                }else{
+                    console.log("*ERROR* Code:" + data.cod + " \n Message: " + data.message);
+                }  
         });
     });
 }
@@ -153,7 +168,7 @@ function removeChildren(parent){
             this.remove();
         });
     }
-    
+
 function makeFiveDayCard(data, index){
     //create a colum
     let colum =  $("<div>")
