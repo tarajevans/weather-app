@@ -17,6 +17,7 @@ let fiveDay = document.getElementById("fiveDay");
 let currWindText = document.getElementById("wind");
 let currtempText = document.getElementById("temp");
 let currHumidityText = document.getElementById("humidity");
+let uviSpan=document.getElementById("uviSpan");
 
 var places = [];
 
@@ -109,6 +110,8 @@ function displayWeather(timeStamp){
     $(currHumidityText).text("Humidity: " + humidity + "%");
     $(currWindText).text("Wind Speed: " + windSpeed + " KPH");
     $(currtempText).text("Tempeture: " + temp + " C");
+    $(uviSpan).text(uvi);
+    checkUvi(uvi);
     var resultString = city + " (" + currDate + ") " +  "<img src=icons/"+currentIcon+".png>";
      displayResults.innerHTML = resultString;
 }
@@ -273,6 +276,23 @@ function loadLast(){
         stateIn = "IL";
         getCords();
     }  
+}
+//set uvi span background colour
+function checkUvi(uvi) {
+    if(uvi<=2){
+        uviSpan.style.backgroundColor="green";
+    }else if(uvi>2&&uvi<=5){
+        uviSpan.style.backgroundColor="yellow";
+        }else if(uvi>5&&uvi<=7){
+            uviSpan.style.backgroundColor="orange";
+            }else if(uvi>7&&uvi<=10) {
+                uviSpan.style.backgroundColor="red";
+            }else if(uvi>10) {
+                uviSpan.style.backgroundColor="violet";
+            }else {
+                console.log ("bad input");
+            }
+
 }
 
 getHistory();
