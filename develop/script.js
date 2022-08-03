@@ -36,10 +36,6 @@ function createHistory(){
             var revPlaces = places.reverse();
             //loop through the revPlaces array and apply the following to each
             for (var i = 0; i < revPlaces.length; i++){
-                //create a list item 
-                var listItem = $("<li>");
-                //add the class "historyLi" to the listItem
-                listItem.addClass("historyLi");
                 //create a button named cityButton
                 var cityButton = $("<button>");
                 //get the of each city from revPlaces and assign it to the text atttribute of the cityButton
@@ -48,10 +44,8 @@ function createHistory(){
                 cityButton.addClass("cityButton");
                 //add a data-state value to the button tag
                 $(cityButton).data("state", revPlaces[i][1]);
-                //add the cityButton to the listItem
-                listItem.append(cityButton);
-                //add the listItem to the historyUl
-                $(historyUl).append(listItem);
+                //add the cityButton to historyUl
+                $(historyUl).append(cityButton);
             }
         }
 }
@@ -109,7 +103,7 @@ function displayWeather(timeStamp){
     //assign values to text fields
     $(currHumidityText).text("Humidity: " + humidity + "%");
     $(currWindText).text("Wind Speed: " + windSpeed + " KPH");
-    $(currtempText).text("Tempeture: " + temp + " C");
+    $(currtempText).text("Temperature: " + temp + " C");
     $(uviSpan).text(uvi);
     checkUvi(uvi);
     var resultString = city + " (" + currDate + ") " +  "<img src=icons/"+currentIcon+".png>";
@@ -217,11 +211,11 @@ function makeFiveDayCard(data, index){
     $(card).addClass("card fiveDayCard");
     
     //create card header
-    let cardHeader = $("<h4>");
+    let dateText = $("<strong>");
     // add class "card-header" to cardHeader
-    $(cardHeader).addClass("card-header");
+    $(dateText).addClass("dateText");
     //assign date to cardHeader
-    $(cardHeader).text (convertTime(data.daily[index].dt));
+    $(dateText).text (convertTime(data.daily[index].dt));
     
     //create a div for the icon
     let iconDiv = $("<img>");
@@ -238,7 +232,7 @@ function makeFiveDayCard(data, index){
     $(humidText).text("Humidity: " + data.daily[index].humidity.toString()+ "%");
 
     //add header to card
-    $(card).append(cardHeader);
+    $(card).append(dateText);
     //add iconDiv to card
     $(card).append(iconDiv);
     //add temp wind and humidity to card

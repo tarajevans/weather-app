@@ -12,52 +12,41 @@
     <h1 id="header">Weather Dashboard</h1>
 </header>
 <body>
-    <div clas="row">
-        <div class="col ">
-            <div class="row">
-                <div class="col col-lg-2 text-dark sticky-top d-flex flex-column p-4 p-lg-3">
-                    <h2 class="text-center">
-                        Search for a city
-                    </h2>
-                    <form>
-                        <label for="cityIn">City:</label><br>
-                        <input type="text" id="cityIn" name="cityIn"><br>
-                        <label for="stateIn">State or Province:</label><br>
-                        <input type="text" id="stateIn" name="stateIn">
-                    </form></br>
+    <div class="container">
+        <div class="row">
+            <div class="col col-lg-3">
+                <h3 class="text-center"><strong>
+                Search for a city</strong>
+                </h3>
+                <form>
+                    <label for="cityIn"><strong>City:</strong></label><br>
+                    <input type="text" id="cityIn" name="cityIn"><br>
+                    <label for="stateIn"><strong>State or Province:</strong></label><br>
+                    <input type="text" id="stateIn" name="stateIn"><br>
+                </form><br>
                     <button type="search" id="search">Search</button>
-                    <ul id="history" class="container"></ul>
+                    <hr>
+                <div id="history" class="container"></div>
+            </div>
+            <div class="col col-lg-9"> 
+                <div id="current">  
+                    <h3 id="displayResults"></h3>
+                    <div id="temp"></div>
+                    <div id="humidity"></div>
+                    <div id="wind"></div>
+                    <div id="uvi">UV Index: <span id="uviSpan"></span>></div>
                 </div>
-            </div>
-        </div>
-        
-        <div class="col col-lg-12">    
-            <div id="displayResults">
-
-            </div>
-            <div>
-                <text id="temp"></text>
-            </div>
-            <div>
-                <text id="humidity"></text>
-            </div>
-            <div>
-                <text id="wind"></text>
-            </div>
-            <div>
-                <text id="uvi">UV Index: <span id="uviSpan"></span></text>
-            </div>
-            
-        </div>   
-    
-            <main class="column">
+                <p><strong>5-Day Forecast:</strong></p>
                 <div class="row" id="fiveDay">
-                </div>
-            </main>
-            
-                 
+                </div>   
+            </div>
+        </div>         
     </div>
+
+
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="./develop/script.js"></script>
 </body>
+<footer>
+</footer>
 </html>
