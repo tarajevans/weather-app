@@ -291,4 +291,3 @@ function checkUvi(uvi) {
 
 getHistory();
 createHistory();
-loadLast();
