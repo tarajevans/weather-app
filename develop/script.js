@@ -266,8 +266,8 @@ function loadLast(){
         getCords();
     //if there was no object returned
     }else{
-        cityIn = "Chicago";
-        stateIn = "IL";
+        cityIn = "Toronto";
+        stateIn = "ON";
         getCords();
     }  
 }
