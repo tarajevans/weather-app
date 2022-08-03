@@ -203,7 +203,7 @@ function makeFiveDayCard(data, index){
     //create a colum
     let colum =  $("<div>")
     //add class values
-    $(colum).addClass("fiveDayCol col-4 col-md-3 col-lg-2 col-xl-2 mb-2");//switch this to CSS, then delete this line
+    $(colum).addClass("fiveDayCol col col-sm-6 col-md-6 col-lg-2 col-xl-2 mb-2");
     
     //create a card
     let card = $("<div>");
