@@ -23,31 +23,31 @@ var places = [];
 
 //click handler for cityButtons in the history list
 $(".container").on("click", "button", function(event) {
-        cityIn = $(this).text();
-        stateIn = $(this).data("state");
-        getCords();
+    cityIn = $(this).text();
+    stateIn = $(this).data("state");
+    getCords();
 })
 
 function createHistory(){
-        removeChildren(historyUl);
-        //check that the places array has values stored
-        if (places.length != 0){
-            //reverse the order of the places array to show last entered first
-            var revPlaces = places.reverse();
-            //loop through the revPlaces array and apply the following to each
-            for (var i = 0; i < revPlaces.length; i++){
-                //create a button named cityButton
-                var cityButton = $("<button>");
-                //get the of each city from revPlaces and assign it to the text atttribute of the cityButton
-                cityButton.text(revPlaces[i][0]);
-                //add the class "cityButton" to the cityButton
-                cityButton.addClass("cityButton");
-                //add a data-state value to the button tag
-                $(cityButton).data("state", revPlaces[i][1]);
-                //add the cityButton to historyUl
-                $(historyUl).append(cityButton);
-            }
+    removeChildren(historyUl);
+    //check that the places array has values stored
+    if (places.length != 0){
+        //reverse the order of the places array to show last entered first
+        var revPlaces = places.reverse();
+        //loop through the revPlaces array and apply the following to each
+        for (var i = 0; i < revPlaces.length; i++){
+            //create a button named cityButton
+            var cityButton = $("<button>");
+            //get the of each city from revPlaces and assign it to the text atttribute of the cityButton
+            cityButton.text(revPlaces[i][0]);
+            //add the class "cityButton" to the cityButton
+            cityButton.addClass("cityButton");
+            //add a data-state value to the button tag
+            $(cityButton).data("state", revPlaces[i][1]);
+            //add the cityButton to historyUl
+            $(historyUl).append(cityButton);
         }
+    }
 }
 //click handler for the search button
 $("#search").click(function(){
@@ -89,7 +89,7 @@ function saveCity(cityIn, stateIn){
             }
         
         }
-    //if places array is empty
+        //if places array is empty
     }else{
         //same as above
         var tempArray = [cityIn, stateIn];
@@ -107,7 +107,7 @@ function displayWeather(timeStamp){
     $(uviSpan).text(uvi);
     checkUvi(uvi);
     var resultString = city + " (" + currDate + ") " +  "<img src=icons/"+currentIcon+".png>";
-     displayResults.innerHTML = resultString;
+    displayResults.innerHTML = resultString;
 }
 
 function getHistory(){
@@ -128,7 +128,7 @@ function getHistory(){
 }
 
 function getCords(){
-    fetch("https://maps.googleapis.com/maps/api/geocode/json?address=" + cityIn + ",+" + stateIn +"&key=AIzaSyAweIP9TjVJjtUjpbZuiu69BBoh9sMPMUc").then(function(response) {
+    fetch("https://maps.googleapis.com/maps/api/geocode/json?address=" + cityIn + ",+" + stateIn +"& key=AIzaSyAweIP9TjVJjtUjpbZuiu69BBoh9sMPMUc") .then(function(response) {
         response.json().then(function(data) {
             //check response status
             //if status is ok 
@@ -180,6 +180,7 @@ function convertTime(timeStamp){
     var day = date.getDate();
     return (month+1).toString() + "/" + day.toString() + "/" + year.toString();
 }
+
 // Capitalizes both letters in the state abbreviation
 function capitalizeState(string){
     return string[0].toUpperCase() + string.slice(1).toUpperCase();
@@ -253,6 +254,7 @@ function removeChildren(parent){
             this.remove();
         });
 }
+
 //loads the last city viewed 
 function loadLast(){
     let raw = localStorage.getItem("last");
@@ -271,6 +273,7 @@ function loadLast(){
         getCords();
     }  
 }
+
 //set uvi span background colour
 function checkUvi(uvi) {
     if(uvi<=2){
@@ -286,7 +289,6 @@ function checkUvi(uvi) {
             }else {
                 console.log ("bad input");
             }
-
 }
 
 getHistory();
