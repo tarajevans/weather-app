@@ -150,7 +150,7 @@ function getCords(){
 }
 
 function getWeather(currentLat, currentLng){
-    fetch("https://api.openweathermap.org/data/3.0/onecall?lat=" + currentLat + "&lon=" + currentLng + "&units=metric&appid=ec30fe20fd671a00bbcc63e83e68cb73").then(function(response) {
+    fetch("https://api.openweathermap.org/data/3.0/onecall?lat=" + currentLat + "&lon=" + currentLng + "&units=metric&appid=969563e52dd1849b75c1e2ae4c33021f").then(function(response) {
             response.json().then(function(data) {
                 //check if we recieved a good result
                 if(data.current){
